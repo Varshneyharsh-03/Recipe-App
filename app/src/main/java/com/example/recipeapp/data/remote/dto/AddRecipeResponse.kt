@@ -3,16 +3,7 @@ package com.example.recipeapp.data.remote.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RecipeResponseDTO(
-    val recipes: List<RecipeDTO>,
-    val total: Int,
-    val skip: Int,
-    val limit: Int
-)
-
-@Serializable
-data class RecipeDTO(
-    val id: Int,
+data class AddRecipeResponseDTO(
     val name: String,
     val ingredients: List<String>,
     val instructions: List<String>,
@@ -23,9 +14,5 @@ data class RecipeDTO(
     val cuisine: String,
     val caloriesPerServing: Int,
     val tags: List<String>,
-    val userId: Int,
-    val image: String,
-    val rating: Float,
-    val reviewCount: Int,
     val mealType: List<String>
 )
