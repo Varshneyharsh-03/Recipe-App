@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
@@ -23,18 +24,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.colorspace.WhitePoint
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.recipeapp.presentation.components.LoadingIndicator
 import com.example.recipeapp.presentation.viewmodels.HomeViewModel
 import com.example.recipeapp.ui.theme.OrangeColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(onRecipeClick: (Int) -> Unit, viewmodel: HomeViewModel = viewModel()) {
+
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -51,7 +52,7 @@ fun HomeScreen(onRecipeClick: (Int) -> Unit, viewmodel: HomeViewModel = viewMode
                 .padding(innerPadding)
         ) {
             when {
-                viewmodel.loading -> LoadingIndicator()
+                viewmodel.loading -> LoadingIndicator(2.dp)
 
                 viewmodel.errMsg.isNotEmpty() -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -102,6 +103,29 @@ fun HomeScreen(onRecipeClick: (Int) -> Unit, viewmodel: HomeViewModel = viewMode
                                 title = if (viewmodel.selectCategory == "All") "All Recipes" else viewmodel.selectCategory,
                                 icon = Icons.Default.Menu
                             )
+                        }
+
+
+                        if (viewmodel.recipes.isEmpty()) {
+                            item(span = { GridItemSpan(currentLineSpan = maxLineSpan) }) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 48.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "No Recipe Found",
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = OrangeColor
+                                    )
+                                }
+                            }
+                        } else {
+                            items(viewmodel.recipes, key = { it.id }) { recipe ->
+                                RecipeCard(recipe, { onRecipeClick(recipe.id) })
+                            }
                         }
 
 

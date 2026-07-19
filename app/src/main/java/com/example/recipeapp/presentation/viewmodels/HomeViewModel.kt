@@ -1,5 +1,6 @@
 package com.example.recipeapp.presentation.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -35,21 +36,27 @@ class HomeViewModel : ViewModel() {
 
     private var allRecipes: List<RecipeDTO> = emptyList()
 
+    init {
+        fetchAllRecipes()
+    }
     fun fetchAllRecipes() {
         loading = true
         errMsg = ""
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 val result = repository.getAllRecipe()
                 allRecipes = result
                 val cuisines = result.map { it.cuisine }.distinct().sorted()
                 allCategories = listOf("All") + cuisines
                 applyFilters()
+
+            } catch (e: Throwable) {
+                errMsg = e.message ?: "An unexpected error occurred"
+
+            } finally {
+                loading = false
+                Log.d("ERROR", errMsg)
             }
-        } catch (e: Throwable) {
-            errMsg = e.message ?: "An unexpected error occurred"
-        } finally {
-            loading = false
         }
 
     }

@@ -20,6 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecipeAppTheme {
+                HomeScreen(onRecipeClick = {})
             }
         }
     }
