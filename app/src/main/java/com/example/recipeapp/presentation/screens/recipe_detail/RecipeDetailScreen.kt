@@ -75,6 +75,11 @@ fun RecipeDetailScreen(
                         }
                     }
                 }
+
+                viewmodel.recipe != null -> {
+                    RecipeDetailContent(viewmodel.recipe!!)
+
+                }
             }
         }
     }
