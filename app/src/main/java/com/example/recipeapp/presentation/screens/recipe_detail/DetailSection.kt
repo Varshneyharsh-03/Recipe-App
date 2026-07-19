@@ -35,7 +35,7 @@ fun Details(
         border = CardDefaults.outlinedCardBorder(true)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.padding(16.dp, vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(

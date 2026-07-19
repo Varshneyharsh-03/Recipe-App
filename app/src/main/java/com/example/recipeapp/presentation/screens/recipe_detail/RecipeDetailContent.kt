@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,14 +53,17 @@ fun RecipeDetailContent(details: RecipeDTO) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
+            .background(color = OrangeColor.copy(0.02f))
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+
     ) {
         AsyncImage(
             model = details.image,
             contentDescription = details.name,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(220.dp)
+                .height(180.dp)
                 .clip(RoundedCornerShape(24.dp)),
             contentScale = ContentScale.Crop
         )
@@ -71,7 +75,7 @@ fun RecipeDetailContent(details: RecipeDTO) {
                 fontWeight = FontWeight.Bold,
                 color = Color.DarkGray
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 InfoChip(label = details.cuisine, icon = Icons.Default.Public)
                 InfoChip(label = details.difficulty, icon = Icons.Default.Star)
@@ -92,7 +96,7 @@ fun RecipeDetailContent(details: RecipeDTO) {
                     label = "Cook",
                     value = "${details.cookTimeMinutes}m"
                 )
-                HorizontalDivider(
+                VerticalDivider(
                     modifier = Modifier.height(36.dp),
                     thickness = 1.dp,
                     color = Color.Gray.copy(alpha = 0.2f)
@@ -100,7 +104,7 @@ fun RecipeDetailContent(details: RecipeDTO) {
                 StateItem(
                     icon = Icons.Default.Egg, label = "Serves", value = "${details.servings}"
                 )
-                HorizontalDivider(
+                VerticalDivider(
                     modifier = Modifier.height(36.dp),
                     thickness = 1.dp,
                     color = Color.Gray.copy(alpha = 0.2f)
@@ -110,7 +114,7 @@ fun RecipeDetailContent(details: RecipeDTO) {
                     label = "Prep",
                     value = "${details.prepTimeMinutes}"
                 )
-                HorizontalDivider(
+                VerticalDivider(
                     modifier = Modifier.height(36.dp),
                     thickness = 1.dp,
                     color = Color.Gray.copy(alpha = 0.2f)
@@ -147,7 +151,8 @@ fun RecipeDetailContent(details: RecipeDTO) {
         Details(title = "Instructions", icon = Icons.Default.Info) {
             details.instructions.forEachIndexed { index, instruction ->
                 Row(
-                    modifier = Modifier.padding(vertical = 6.dp), verticalAlignment = Alignment.Top
+                    modifier = Modifier.padding(vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
                         modifier = Modifier
